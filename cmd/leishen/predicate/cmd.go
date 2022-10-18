@@ -59,7 +59,7 @@ func predicate(ctx *cli.Context) error {
 	if ctx.IsSet(txsFlag.Name) || ctx.IsSet(txsFileFlag.Name) {
 		var txs []string
 		if ctx.IsSet(txsFlag.Name) {
-			txs = append(txs, ctx.String(txsFileFlag.Name))
+			txs = append(txs, ctx.StringSlice(txsFlag.Name)...)
 		}
 
 		if ctx.IsSet(txsFileFlag.Name) {

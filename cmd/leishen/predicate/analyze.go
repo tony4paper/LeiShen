@@ -120,14 +120,13 @@ func analyzeTransaction(blockDB, receiptDB, itxDB, contractDB, fltxDB, platformN
 	erc_records = PreProcessRecord(contractDB, platformNameDB, fltx, erc_records)
 
 	trades := SearchTrades(erc_records)
-	p1 := SearchRaisingPrice(trades)
-	p2 := SearchMultiRoundPriceFluctuation(trades)
-	p3 := SearchCollateralizingLiquidity(erc_records)
-	p4 := SearchBuyLowSellHigh(trades)
+	KRP := SearchRaisingPrice(trades)
+	MBS := SearchMultiRoundPriceFluctuation(trades)
+	SBS := SearchBuyLowSellHigh(trades)
 
-	fmt.Printf("%s, %d, %s, %s, %s, %s, %d, %d, %d, %d, %d, %d, %d\n", txHash, block.NumberU64(), message.From(), message.To(), time.Unix(int64(block.Time()), 0).Format("2006-01-02 15:04:05"), strings.Join(fltx.Types(), "|"),
+	fmt.Printf("%s, %d, %s, %s, %s, %s, %d, %d, %d, %t, %t, %t\n", txHash, block.NumberU64(), message.From(), message.To(), time.Unix(int64(block.Time()), 0).Format("2006-01-02 15:04:05"), strings.Join(fltx.Types(), "|"),
 		non_zero_itx_number, erc_record_number, time.Since(start).Milliseconds(),
-		len(p1), len(p2), len(p3), len(p4))
+		len(KRP) > 0, len(MBS) > 0, len(SBS) > 0)
 
 	return nil
 }
